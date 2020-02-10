@@ -73,6 +73,7 @@ bool Game::init()
     paddleBody->setCollisionBitmask(3);
     paddleBody->setContactTestBitmask(true);
     paddle->setPhysicsBody(paddleBody);
+    this->addChild(paddle);
 
     ball = Sprite::create("ball.png");
     ball->setPosition(size.width / 2, paddle->getContentSize().height + ball->getContentSize().height / 2);
@@ -83,20 +84,21 @@ bool Game::init()
      
     ball->setPhysicsBody(ballBody);
     ball->setName("ball");
-
-    auto brick = Sprite::create("brick.png"); 
-    brick->setPosition(size.width / 2, size.height / 4);
-    brick->setName("brick");
-
-    auto brickBody = PhysicsBody::createBox(brick->getContentSize(), PhysicsMaterial(1, 1, 1));
-    brickBody->setDynamic(false);
-    brick->setPhysicsBody(brickBody);
-    brickBody->setCollisionBitmask(3);
-    brickBody->setContactTestBitmask(true);
-
-    this->addChild(paddle);
     this->addChild(ball);
-    this->addChild(brick);
+
+
+    for (int i = 0; i < 5; ++i)
+    {
+        auto brick = Sprite::create("brick.png");
+        brick->setPosition(size.width / 5 + 70 * i, 3 * size.height / 4);
+        brick->setName("brick");
+        auto brickBody = PhysicsBody::createBox(brick->getContentSize(), PhysicsMaterial(1, 1, 1));
+        brickBody->setDynamic(false);
+        brick->setPhysicsBody(brickBody);
+        brickBody->setCollisionBitmask(3);
+        brickBody->setContactTestBitmask(true);
+        this->addChild(brick);
+    }   
 
     return true;
 }
